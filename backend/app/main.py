@@ -82,6 +82,9 @@ app.include_router(metrics_router, prefix="/metrics", tags=["Telemetry & Observa
 # 4. Static UI Mounting for Friction-Free Local Execution
 if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+    assets_dir = os.path.join(STATIC_DIR, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
 @app.get("/health", tags=["Health"])
 def health_check():

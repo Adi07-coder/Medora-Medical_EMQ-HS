@@ -10,12 +10,14 @@ export const setAuthToken = (token: string | null) => {
   }
 };
 
+const BASE_URL = (import.meta as any).env?.VITE_API_URL || '';
+
 export const apiCall = async (endpoint: string, method = 'GET', body: any = null) => {
   const token = getAuthToken();
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`/api/v1${endpoint}`, {
+  const res = await fetch(`${BASE_URL}/api/v1${endpoint}`, {
     method,
     headers,
     body: body ? JSON.stringify(body) : null
